@@ -727,12 +727,16 @@ void casa()
 	glPopMatrix();//fin piso2
 
 	glPushMatrix();//inicio piso3
-	glTranslatef(16, 0, -6);
-	glScalef(5.7, 1, 3.5);
+	glTranslatef(16, 0, -8);
+	glScalef(5.7, 1, 3.1);
 	piso();
 	glPopMatrix();//fin piso3
 
-
+	glPushMatrix();//inicio piso4
+	glTranslatef(27.3, 0, 17);
+	glScalef(3.41, 1, 2);
+	piso();
+	glPopMatrix();//fin piso4
 
 	glPushMatrix();//inicio pared
 	glTranslatef(75, 10, -27.8);
@@ -924,12 +928,60 @@ void casa()
 	glPopMatrix();//fin pared27
 
 	glPushMatrix();//inicio pared28
-	glTranslatef(-12, 10, 10);
+	glTranslatef(-12, 10, 9.8);
 	glRotatef(90, 0, 1, 0);
 	glScalef(0.2, 1, 0.2);
 	pared();
 	glPopMatrix();//fin pared28
 
+	glPushMatrix();//inicio pared29
+	glTranslatef(-9.8, 10, 7.5);
+	glRotatef(180, 0, 1, 0);
+	glScalef(0.2, 1, 0.2);
+	pared();
+	glPopMatrix();//fin pared29
+	
+	glPushMatrix();//inicio pared30
+	glTranslatef(8, 10, 7.5);
+	glRotatef(180, 0, 1, 0);
+	glScalef(0.2, 1, 0.2);
+	pared();
+	glPopMatrix();//fin pared30
+
+	glPushMatrix();//inicio pared31
+	glTranslatef(10.4, 10, 9.7);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.2, 1, 0.2);
+	pared();
+	glPopMatrix();//fin pared31
+
+	glPushMatrix();//inicio pared32
+	glTranslatef(10.4, 10, 23.55);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.3, 1, 0.2);
+	pared();
+	glPopMatrix();//fin pared32
+
+	glPushMatrix();//inicio pared33
+	glTranslatef(27.4, 10, 26.9);
+	glRotatef(180, 0, 1, 0);
+	glScalef(1.47, 1, 0.2);
+	pared();
+	glPopMatrix();//fin pared33
+
+	glPushMatrix();//inicio pared34
+	glTranslatef(44.4, 10, 20.1);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.6, 1, 0.2);
+	pared();
+	glPopMatrix();//fin pared34
+
+	glPushMatrix();//inicio pared35
+	glTranslatef(44.4, 10, -5.5);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.6, 1, 0.2);
+	pared();
+	glPopMatrix();//fin pared35
 
 	glPopMatrix();//fin casa
 }
