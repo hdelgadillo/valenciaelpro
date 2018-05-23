@@ -714,11 +714,25 @@ void casa()
 	glPushMatrix();//inicio casa
 	glTranslatef(0 , 0, 0);
 	
-	glPushMatrix();//inicio piso
+	glPushMatrix();//inicio piso1
 	glTranslatef(6.5, 0, -37);
 	glScalef(13.7,1,2.8);
 	piso();
-	glPopMatrix();//fin piso
+	glPopMatrix();//fin piso1
+
+	glPushMatrix();//inicio piso2
+	glTranslatef(-37.1, 0,2 );
+	glScalef(5, 1, 5);
+	piso();
+	glPopMatrix();//fin piso2
+
+	glPushMatrix();//inicio piso3
+	glTranslatef(16, 0, -6);
+	glScalef(5.7, 1, 3.5);
+	piso();
+	glPopMatrix();//fin piso3
+
+
 
 	glPushMatrix();//inicio pared
 	glTranslatef(75, 10, -27.8);
@@ -826,9 +840,9 @@ void casa()
 	glPopMatrix();//fin pared15
 
 	glPushMatrix();//inicio pared16
-	glTranslatef(-60.8, 10, -51.1);
+	glTranslatef(-48.2, 10, -51.1);
 	glRotatef(180, 0, 1, 0);
-	glScalef(2.1, 1, 0.2);
+	glScalef(1.2, 1, 0.2);
 	pared();
 	glPopMatrix();//fin pared16
 
@@ -838,6 +852,84 @@ void casa()
 	glScalef(0.7, 1, 0.2);
 	pared();
 	glPopMatrix();//fin pared17
+
+	glPushMatrix();//inicio pared18
+	glTranslatef(-62, 10, -45.45);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.5, 1,0.2);
+	pared();
+	glPopMatrix();//fin pared18
+
+	glPushMatrix();//inicio pared19
+	glTranslatef(-62, 10, -25.45);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.6, 1,0.2);
+	pared();
+	glPopMatrix();//fin pared19
+
+	glPushMatrix();//inicio pared20
+	glTranslatef(-34.5, 10, -16.2);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.6, 1, 0.2);
+	pared();
+	glPopMatrix();//fin pared20
+
+	glPushMatrix();//inicio pared21
+	glTranslatef(-48.2, 10, -9.2);
+	glRotatef(180, 0, 1, 0);
+	glScalef(1.2, 1, 0.2);
+	pared();
+	glPopMatrix();//fin pared21
+
+	glPushMatrix();//inicio pared22
+	glTranslatef(-62, 10, -11.39);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.2, 1, 0.2);
+	pared();
+	glPopMatrix();//fin pared22
+
+	glPushMatrix();//inicio pared23
+	glTranslatef(-12, 10, -19.1);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.35, 1, 0.2);
+	pared();
+	glPopMatrix();//fin pared23
+
+	glPushMatrix();//inicio pared24
+	glTranslatef(-45.7, 10, 5);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.4, 1, 0.2);
+	pared();
+	glPopMatrix();//fin pared24
+
+	glPushMatrix();//inicio pared25
+	glTranslatef(-45.7, 10, 22.4);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.4, 1, 0.2);
+	pared();
+	glPopMatrix();//fin pared25
+
+	glPushMatrix();//inicio pared26
+	glTranslatef(-28.9, 10, 26.9);
+	glRotatef(180, 0, 1, 0);
+	glScalef(1.46, 1, 0.2);
+	pared();
+	glPopMatrix();//fin pared26
+
+	glPushMatrix();//inicio pared27
+	glTranslatef(-12, 10, 23.55);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.3, 1, 0.2);
+	pared();
+	glPopMatrix();//fin pared27
+
+	glPushMatrix();//inicio pared28
+	glTranslatef(-12, 10, 10);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.2, 1, 0.2);
+	pared();
+	glPopMatrix();//fin pared28
+
 
 	glPopMatrix();//fin casa
 }
