@@ -519,6 +519,14 @@ void piso(void) {
 
 }
 
+void techo1(void) {
+	glPushMatrix();
+	glScalef(10, 0.5, 10);
+	f_jorge.prisma(1, 1, 1, azulejocasa.GLindex, azulejocasa.GLindex, azulejocasa.GLindex, azulejocasa.GLindex, azulejocasa.GLindex, azulejocasa.GLindex);
+	glPopMatrix();
+
+}
+
 void buro(void) {
 	glPushMatrix();
 	glScalef(1.9, 2.4, 1);
@@ -720,24 +728,48 @@ void casa()
 	piso();
 	glPopMatrix();//fin piso1
 
+	glPushMatrix();//inicio techo1
+	glTranslatef(6.5, 20, -37);
+	glScalef(13.7, 1, 2.8);
+	techo1();
+	glPopMatrix();//fin techo1
+
 	glPushMatrix();//inicio piso2
 	glTranslatef(-37.1, 0,2 );
 	glScalef(5, 1, 5);
 	piso();
 	glPopMatrix();//fin piso2
 
+	glPushMatrix();//inicio techo2
+	glTranslatef(-37.1, 20, 2);
+	glScalef(5, 1, 5);
+	techo1();
+	glPopMatrix();//fin techo2
+	
 	glPushMatrix();//inicio piso3
 	glTranslatef(16, 0, -8);
 	glScalef(5.7, 1, 3.1);
 	piso();
 	glPopMatrix();//fin piso3
 
+	glPushMatrix();//inicio techo3
+	glTranslatef(16, 20, -8);
+	glScalef(5.7, 1, 3.1);
+	techo1();
+	glPopMatrix();//fin techo3
+	
 	glPushMatrix();//inicio piso4
 	glTranslatef(27.3, 0, 17);
 	glScalef(3.41, 1, 2);
 	piso();
 	glPopMatrix();//fin piso4
 
+	glPushMatrix();//inicio techo4
+	glTranslatef(27.3, 20, 17);
+	glScalef(3.41, 1, 2);
+	techo1();
+	glPopMatrix();//fin techo4
+	
 	glPushMatrix();//inicio pared
 	glTranslatef(75, 10, -27.8);
 	glRotatef(90,0,1,0);
