@@ -139,7 +139,7 @@ void InitGL ( GLvoid )     // Inicializamos parametros
 	azulejo.BuildGLTexture();
 	azulejo.ReleaseImage();
 
-	azulejocasa.LoadTGA("Casa/azulejo_casa.tga");
+	azulejocasa.LoadTGA("Casa/tiles.tga");
 	azulejocasa.BuildGLTexture();
 	azulejocasa.ReleaseImage();
 
@@ -721,6 +721,8 @@ void casa()
 {		
 	glPushMatrix();//inicio casa
 	glTranslatef(0 , 0, 0);
+
+	///glPushMatrix();platabaja
 	
 	glPushMatrix();//inicio piso1
 	glTranslatef(6.5, 0, -37);
@@ -770,6 +772,13 @@ void casa()
 	techo1();
 	glPopMatrix();//fin techo4
 	
+	glPushMatrix();//inicio techo4
+	glTranslatef(59.5, 20, -11);
+	glScalef(3.1, 1, 2.51);
+	techo1();
+	glPopMatrix();//fin techo4
+
+
 	glPushMatrix();//inicio pared
 	glTranslatef(75, 10, -27.8);
 	glRotatef(90,0,1,0);
@@ -1014,6 +1023,64 @@ void casa()
 	glScalef(0.6, 1, 0.2);
 	pared();
 	glPopMatrix();//fin pared35
+
+	///glPopMatrix();plantabaja
+
+	///glPushMatrix();plata alta inicio
+
+	glPushMatrix();//inicio pared1
+	glTranslatef(-1.1, 30, -51.1);
+	glRotatef(180, 0, 1, 0);
+	glScalef(5.3, 1, 0.2);
+	pared();
+	glPopMatrix();//fin pared1
+
+	glPushMatrix();//inicio pared2
+	glTranslatef(-1.1, 30, 1.5);
+	glRotatef(180, 0, 1, 0);
+	glScalef(5.3, 1, 0.2);
+	pared();
+	glPopMatrix();//fin pared2
+
+	glPushMatrix();//inicio pared3
+	glTranslatef(-62, 30, -10);
+	glRotatef(90, 0, 1, 0);
+	glScalef(1, 1, 0.2);
+	pared();
+	glPopMatrix();//fin pared3
+
+	glPushMatrix();//inicio pared4
+	glTranslatef(-62, 30, -39.5);
+	glRotatef(90, 0, 1, 0);
+	glScalef(1, 1, 0.2);
+	pared();
+	glPopMatrix();//fin pared4
+
+	glPushMatrix();//inicio pared5
+	glTranslatef(-58.5, 30, -20);
+	glRotatef(180, 0, 1, 0);
+	glScalef(0.3, 1, 0.2);
+	pared();
+	glPopMatrix();//fin pared5
+
+	glPushMatrix();//inicio pared6
+	glTranslatef(-30, 30, -20);
+	glRotatef(180, 0, 1, 0);
+	glScalef(0.5, 1, 0.2);
+	pared();
+	glPopMatrix();//fin pared6
+
+	glPushMatrix();//inicio pared7
+	glTranslatef(-30, 30, -9.3);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.93, 1, 0.2);
+	pared();
+	glPopMatrix();//fin pared7
+
+
+
+	///glPopMatrix();plata alta fin
+
 
 	glPopMatrix();//fin casa
 }
