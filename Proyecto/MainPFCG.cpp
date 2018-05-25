@@ -71,7 +71,7 @@ CFiguras f_enrique;
 CFiguras f_jorge;
 CFiguras f_hugo;
 CFiguras f_ventilador;
-//CFiguras f_diego;
+CFiguras f_diego;
 //CFiguras fig2;
 
 
@@ -670,6 +670,15 @@ void cama(void) {
 	glPopMatrix();
 }
 
+void barandal(void) {
+	glPushMatrix();
+	glScalef(23, 20, 1);
+	f_diego.prisma2(Textcasa.GLindex, Textcasa.GLindex);
+	glPopMatrix();
+
+}
+
+
 void cuadro(void) {
 	glPushMatrix();
 	glScalef(5.6, 4.6, 0.1);
@@ -893,9 +902,9 @@ void casa()
 	glPopMatrix();//fin pared10
 
 	glPushMatrix();//inicio pared11
-	glTranslatef(16, 10, -34.9);
+	glTranslatef(15.5, 10, -34.9);
 	glRotatef(180, 0, 1, 0);
-	glScalef(0.1, 1, 0.2);
+	glScalef(0.25, 1, 0.2);
 	pared();
 	glPopMatrix();//fin pared11
 
@@ -977,12 +986,40 @@ void casa()
 	pared();
 	glPopMatrix();//fin pared18
 
+	glPushMatrix();//inicio marcoabajo
+	glTranslatef(-62, 2.5, -35);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.5, 0.25, 0.2);
+	pared();
+	glPopMatrix();//fin marcoabajo
+
+	glPushMatrix();//inicio marcoarriba
+	glTranslatef(-62, 17.8, -35);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.5, 0.24, 0.2);
+	pared();
+	glPopMatrix();//fin marcoarriba
+
 	glPushMatrix();//inicio pared19
 	glTranslatef(-62, 10, -25.45);
 	glRotatef(90, 0, 1, 0);
 	glScalef(0.6, 1,0.2);
 	pared();
 	glPopMatrix();//fin pared19
+
+	glPushMatrix();//inicio marcoabajo
+	glTranslatef(-62, 3.5, -15);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.4, 0.5, 0.2);
+	pared();
+	glPopMatrix();//fin marcoabajo
+
+	glPushMatrix();//inicio marcoarriba
+	glTranslatef(-62, 17.8, -15);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.4, 0.25, 0.2);
+	pared();
+	glPopMatrix();//fin marcoarriba
 
 	glPushMatrix();//inicio pared20
 	glTranslatef(-34.5, 10, -16.2);
@@ -1018,6 +1055,23 @@ void casa()
 	glScalef(0.4, 1, 0.2);
 	pared();
 	glPopMatrix();//fin pared24
+
+	glPushMatrix();//inicio marcoabajo
+	glTranslatef(-45.7, 3.5,12.5);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.5, 0.35, 0.2);
+	pared();
+	glPopMatrix();//fin marcoabajo
+
+	glPushMatrix();//inicio marcoarriba
+	glTranslatef(-45.7, 17.8, 12.5);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.5, 0.24, 0.2);
+	pared();
+	glPopMatrix();//fin marcoarriba
+
+
+
 
 	glPushMatrix();//inicio pared25
 	glTranslatef(-45.7, 10, 22.4);
@@ -1089,12 +1143,48 @@ void casa()
 	pared();
 	glPopMatrix();//fin pared34
 
+	glPushMatrix();//inicio marcoabajo
+	glTranslatef(44.4, 3.5, 7.5);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.55, 0.35, 0.2);
+	pared();
+	glPopMatrix();//fin marcoabajo
+
+	glPushMatrix();//inicio marcoarriba
+	glTranslatef(44.4, 17.8, 7.5);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.55, 0.24, 0.2);
+	pared();
+	glPopMatrix();//fin marcoarriba
+
 	glPushMatrix();//inicio pared35
 	glTranslatef(44.4, 10, -5.5);
 	glRotatef(90, 0, 1, 0);
 	glScalef(0.6, 1, 0.2);
 	pared();
 	glPopMatrix();//fin pared35
+
+	glPushMatrix();//inicio pared36
+	glTranslatef(44.4, 10, -22.4);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.07, 1, 0.2);
+	pared();
+	glPopMatrix();//fin pared36
+
+	glPushMatrix();//inicio pared37
+	glTranslatef(30.5, 10, -26);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.24, 1, 0.2);
+	pared();
+	glPopMatrix();//fin pared37
+
+	glPushMatrix();//inicio pared38
+	glTranslatef(42.95, 10, -34.9);
+	glRotatef(180, 0, 1, 0);
+	glScalef(0.1, 1, 0.2);
+	pared();
+	glPopMatrix();//fin pared38
+
 
 	///glPopMatrix();plantabaja
 
@@ -1177,6 +1267,21 @@ void casa()
 	pared();
 	glPopMatrix();//fin pared11
 
+	glPushMatrix();//inicio marcoabajo
+	glTranslatef(45, 22.5, -5);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.5, 0.25, 0.2);
+	pared();
+	glPopMatrix();//fin marcoabajo
+
+	glPushMatrix();//inicio marcoarriba
+	glTranslatef(45, 37.6, -5);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.5, 0.24, 0.2);
+	pared();
+	glPopMatrix();//fin marcoarriba
+
+
 	glPushMatrix();//inicio pared12
 	glTranslatef(45, 30, -20);
 	glRotatef(90, 0, 1, 0);
@@ -1197,6 +1302,20 @@ void casa()
 	glScalef(0.4, 1, 0.2);
 	pared();
 	glPopMatrix();//fin pared14
+
+	glPushMatrix();//inicio marcoabajo
+	glTranslatef(39, 22.5, -36.5);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.5, 0.25, 0.2);
+	pared();
+	glPopMatrix();//fin marcoabajo
+
+	glPushMatrix();//inicio marcoarriba
+	glTranslatef(39, 37.6, -36.5);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.5, 0.24, 0.2);
+	pared();
+	glPopMatrix();//fin marcoarriba
 
 	glPushMatrix();//inicio pared15
 	glTranslatef(39, 30, -46.5);
@@ -1318,11 +1437,41 @@ void casa()
 	pared();
 	glPopMatrix();//fin pared31
 
+	glPushMatrix();//inicio pared32
+	glTranslatef(45, 30, -11);
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.1, 1, 0.2);
+	pared();
+	glPopMatrix();//fin pared32
+
+
+	glPushMatrix();//barandal1
+	glTranslatef(75, 25.05, -24.75);
+	glRotatef(90, 0, 1, 0);
+	glScalef(2.29, 0.5, 0.2);
+	barandal();
+	glPopMatrix();//fin barandal1
+
+	glPushMatrix();//barandal2
+	glTranslatef(60, 25.05,1.5 );
+	glRotatef(180, 0, 1, 0);
+	glScalef(1.3, 0.5, 0.2);
+	barandal();
+	glPopMatrix();//fin barandal2
+
+	glPushMatrix();//barandal2
+	glTranslatef(57.1, 25.05, -51.1);
+	glRotatef(180, 0, 1, 0);
+	glScalef(1.57, 0.5, 0.2);
+	barandal();
+	glPopMatrix();//fin barandal2
+
 	///glPopMatrix();plata alta fin
 
 
 	glPopMatrix();//fin casa
 }
+
 
 
 void display(void)   // Creamos la funcion donde se dibuja
