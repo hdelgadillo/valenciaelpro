@@ -1,5 +1,2 @@
 ﻿  MainPFCG.cpp
-texture.obj : warning LNK4099: no se encontr¾ PDB 'vc141.pdb' con 'texture.obj' o en 'C:\Users\diegu\OneDrive\Documentos\GitHub\valenciaelpro\Debug\vc141.pdb'; se vincularß el objeto sin tener en cuenta informaci¾n de depuraci¾n
-figuras.obj : warning LNK4099: no se encontr¾ PDB 'vc141.pdb' con 'figuras.obj' o en 'C:\Users\diegu\OneDrive\Documentos\GitHub\valenciaelpro\Debug\vc141.pdb'; se vincularß el objeto sin tener en cuenta informaci¾n de depuraci¾n
-Camera.obj : warning LNK4099: no se encontr¾ PDB 'vc141.pdb' con 'Camera.obj' o en 'C:\Users\diegu\OneDrive\Documentos\GitHub\valenciaelpro\Debug\vc141.pdb'; se vincularß el objeto sin tener en cuenta informaci¾n de depuraci¾n
-  Proyecto.vcxproj -> C:\Users\diegu\OneDrive\Documentos\GitHub\valenciaelpro\Debug\Proyecto.exe
+  Proyecto.vcxproj -> C:\Users\Hugo_\OneDrive\Documentos\GitHub\valenciaelpro\Debug\Proyecto.exe

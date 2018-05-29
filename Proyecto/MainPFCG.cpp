@@ -16,9 +16,9 @@
 #include "texture.h"
 #include "figuras.h"
 #include "Camera.h"
-
+#include <Windows.h>
 #include "cmodel/CModel.h"
-
+#include <MMSystem.h>
 //Solo para Visual Studio 2015
 #if (_MSC_VER >= 1900)
 #   pragma comment( lib, "legacy_stdio_definitions.lib" )
@@ -385,7 +385,10 @@ void barracocina(void) {
 	f_jorge.prisma2(puertabarra.GLindex, puertabarra.GLindex);
 	glPopMatrix();
 }
+void sonidotomaseltren() {
 
+	PlaySound(TEXT("tomas.wav"), NULL, SND_ASYNC);
+}
 void ventilador(void) {
 
 	glPushMatrix();//centro
@@ -1477,13 +1480,12 @@ void casa()
 void display(void)   // Creamos la funcion donde se dibuja
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+	
 	glLoadIdentity();
 
 	glPushMatrix();
 
 	glRotatef(g_lookupdown, 1.0f, 0, 0);
-
 	gluLookAt(objCamera.mPos.x, objCamera.mPos.y, objCamera.mPos.z,
 		objCamera.mView.x, objCamera.mView.y, objCamera.mView.z,
 		objCamera.mUp.x, objCamera.mUp.y, objCamera.mUp.z);
@@ -1521,9 +1523,9 @@ void display(void)   // Creamos la funcion donde se dibuja
 		glPopMatrix();
 
 		glPopMatrix();//fin
-	
+		
 	glutSwapBuffers ( );
-
+	
 }
 
 
@@ -1578,25 +1580,34 @@ void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
 		case 'w':   //Movimientos de camara
 		case 'W':
 			objCamera.Move_Camera( CAMERASPEED+0.4 );
+			
 			break;
 
 		case 's':
 		case 'S':
 			objCamera.Move_Camera(-(CAMERASPEED+0.4));
+			
 			break;
 
 		case 'a':
 		case 'A':
 			objCamera.Strafe_Camera(-(CAMERASPEED+0.4));
+		
 			break;
 
 		case 'd':
 		case 'D':
 			objCamera.Strafe_Camera( CAMERASPEED+0.4 );
+			
 			break;
 
 		case 'v':
 		case 'V':
+			giro_ventilador ^= true;
+			break;
+		case 'u':
+		case 'U':
+			sonidotomaseltren();
 			giro_ventilador ^= true;
 			break;
 		//case ' ':		//Poner algo en movimiento
