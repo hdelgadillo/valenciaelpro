@@ -29,6 +29,73 @@ GLfloat g_lookupdown = 0.0f;    // Look Position In The Z-Axis (NEW)
 
 int font=(int)GLUT_BITMAP_HELVETICA_18;
 
+
+#define MAX_FRAMES 5
+int i_max_steps = 90;
+int i_curr_steps = 0;
+DWORD dwFrames = 0;
+DWORD dwCurrentTime = 0;
+DWORD dwLastUpdateTime = 0;
+DWORD dwElapsedTime = 0;
+float  movY = 0.0;
+float pirueta = 0.0;
+float angRot = 0.0;
+float movKitX = 0.0;
+float movKitY = 0.0;
+float movKitZ = 0.0;
+float rotKit = 0.0;
+float rotTires = 0.0;
+float rotKitv = 0.0;
+boolean g_fanimacion = false;
+boolean regresa = false;
+
+bool circuito = false;
+bool circuito_inverso = false;
+bool recorrido1 = true;
+bool recorrido2 = false;
+bool recorrido3 = false;
+bool recorrido4 = false;
+bool recorrido5 = false;
+bool recorrido1_inv = true;
+bool recorrido2_inv = false;
+bool recorrido3_inv = false;
+bool recorrido4_inv = false;
+bool recorrido5_inv = false;
+bool recorrido6_inv = false;
+bool recorrido7_inv = false;
+bool recorrido8_inv = false;
+bool g_avanza = false;
+
+typedef struct _frame
+{
+	//Variables para GUARDAR Key Frames
+	float posX;		//Variable para PosicionX
+	float posY;		//Variable para PosicionY
+	float posZ;		//Variable para PosicionZ
+	float incX;		//Variable para IncrementoX
+	float incY;		//Variable para IncrementoY
+	float incZ;		//Variable para IncrementoZ
+
+
+	float  arriba = 0.0;
+	float arribaInc = 0.0;
+
+	
+
+
+
+}FRAME;
+
+FRAME KeyFrame[MAX_FRAMES];
+int FrameIndex = 20;			//introducir datos
+bool play = false;
+int playIndex = 0;
+int w = 500, h = 500;
+int frame = 0, time, timebase = 0;
+char s[30];
+
+
+
 GLfloat Diffuse[]= { 1.0f, 1.0f, 1.0f, 1.0f };				// Diffuse Light Values
 GLfloat Specular[] = { 1.0, 1.0, 1.0, 1.0 };				// Specular Light Values
 GLfloat Position[]= { 0.0f, 27.0f, -5.0f, 0.0f };			// Light Position
@@ -38,6 +105,18 @@ GLfloat m_dif1[] = { 0.0f, 0.2f, 1.0f, 1.0f };				// Diffuse Light Values
 GLfloat m_spec1[] = { 0.0, 0.0, 0.0, 1.0 };				// Specular Light Values
 GLfloat m_amb1[] = { 0.0, 0.0, 0.0, 1.0 };				// Ambiental Light Values
 GLfloat m_s1[] = {18};
+
+
+int juego;
+int juego1 = 0;
+int mundo;
+float arriba = 0.0;
+float  arribaInc = 0.0;
+float horizontal = 0;
+float vertical = 1.24;
+float profundidad = -25;
+float giro = 0;
+
 
 CTexture cielo; //Cielo
 CTexture ventana; //Ventanas
@@ -65,15 +144,30 @@ CTexture azulejo;
 CTexture fondotv;
 CTexture lavad;
 CTexture azulejocasa;
-
+CTexture text7;//torre roja
+CTexture text8;//torre blanca
+CTexture text9;//torre azul
+CTexture text10;//torre azul
+CTexture text11;// estrellas
+CTexture text12;//cadenas
+CTexture text13;//silla amarilla
+CTexture mundos;
 //Se utilizarán para definir cada figura que el programador cree//
+CFiguras fig3;
 CFiguras f_enrique;
 CFiguras f_jorge;
 CFiguras f_hugo;
 CFiguras f_ventilador;
 CFiguras f_diego;
-//CFiguras fig2;
+CFiguras fig8;//torre roja
+CFiguras fig9;//torre blanca
+CFiguras fig10;//torre azul
+CFiguras fig11;//estrellas
+CFiguras fig12;//cadenas
+CFiguras fig13;//silla amarilla
 
+//CFiguras fig2;
+CModel avion;
 
 ////Figuras de 3D Studio
 //CModel kit;   //DEclarar modelo 
@@ -219,13 +313,72 @@ void InitGL ( GLvoid )     // Inicializamos parametros
 	madera_ropero.BuildGLTexture();
 	madera_ropero.ReleaseImage();
 
+	text7.LoadTGA("texturas/skyscreamer/fondorojo.tga");
+	text7.BuildGLTexture();
+	text7.ReleaseImage();
+
+	text8.LoadTGA("texturas/skyscreamer/metalblanco.tga");
+	text8.BuildGLTexture();
+	text8.ReleaseImage();
+
+	text9.LoadTGA("texturas/skyscreamer/metalazul.tga");
+	text9.BuildGLTexture();
+	text9.ReleaseImage();
+
+    mundos.LoadTGA("mundo.tga");
+	mundos.BuildGLTexture();
+	mundos.ReleaseImage();
+
+	text11.LoadTGA("texturas/skyscreamer/estrellas.tga");
+	text11.BuildGLTexture();
+	text11.ReleaseImage();
+
+	text12.LoadTGA("texturas/skyscreamer/cadena.tga");
+	text12.BuildGLTexture();
+	text12.ReleaseImage();
+
+	text13.LoadTGA("texturas/skyscreamer/plasticoamarillo.tga");
+	text13.BuildGLTexture();
+	text13.ReleaseImage();
+
+
+	avion._3dsLoad("avion.3ds"); //avion :v
 	////Carga de Figuras
 	//kit._3dsLoad("kitt.3ds");	
 	////kit.VertexNormals();
 	//llanta._3dsLoad("k_rueda.3ds");
 
+	//keyframes
+	KeyFrame[0].arriba = 0;
+	
+
+
+	KeyFrame[1].arriba = -8;
+
+
+	KeyFrame[2].arriba = 0;
+
+
+
+
+
+	//fin 
+
+
 	//objCamera.Position_Camera(0, 2.5f, 3, 0, 10.0f, 0, 1, 1, 0);
 	objCamera.Position_Camera(10, 2.5f, 13, 10, 2.5f, 10, 0, 1 , 0);
+
+	for (int i = 0; i<MAX_FRAMES; i++)
+	{
+		KeyFrame[i].posX = 0;
+		KeyFrame[i].posY = 0;
+		KeyFrame[i].posZ = 0;
+		KeyFrame[i].incX = 0;
+		KeyFrame[i].incY = 0;
+		KeyFrame[i].incZ = 0;
+		
+	}
+
 
 }
 
@@ -239,6 +392,392 @@ void pintaTexto(float x, float y, float z, void *font,char *string)
   {
     glutBitmapCharacter(font, *c); //imprime
   }
+}
+void torreroja(void) {
+
+	glPushMatrix();
+	glPushMatrix();
+	glTranslatef(0.0, 1.85, 0.0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig3.prisma2(text7.GLindex, text7.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0.0, 1.25, 0.38);
+	glRotatef(180, 0.0, 1.0, 1.0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig3.prisma2(text7.GLindex, text7.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0.0, 1.85, 0.75);
+	glRotatef(0, 0.0, 1.0, 1.0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig3.prisma2(text7.GLindex, text7.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0.0, 2.475, 0.38);
+	glRotatef(180, 0.0, 1.0, 1.0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig3.prisma2(text7.GLindex, text7.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0.635, 1.25, 0.75);
+	glRotatef(180, 1, 1, 0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig3.prisma2(text7.GLindex, text7.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0.635, 1.25, 0.0);
+	glRotatef(180, 1, 1, 0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig3.prisma2(text7.GLindex, text7.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(1.25, 1.25, 0.38);
+	glRotatef(180, 0.0, 1.0, 1.0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig3.prisma2(text7.GLindex, text7.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(1.25, 1.85, 0.0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig3.prisma2(text7.GLindex, text7.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(1.25, 1.85, 0.75);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig3.prisma2(text7.GLindex, text7.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(1.25, 2.475, 0.38);
+	glRotatef(180, 0.0, 1.0, 1.0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig3.prisma2(text7.GLindex, text7.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0.635, 2.475, 0.0);
+	glRotatef(180, 1, 1, 0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig3.prisma2(text7.GLindex, text7.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0.635, 2.475, 0.75);
+	glRotatef(180, 1, 1, 0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig3.prisma2(text7.GLindex, text7.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(0.635, 1.80, 0.75);
+	glRotatef(45, 0, 0, 1);
+	glScalef(0.25, 1.45, .25);
+	glDisable(GL_LIGHTING);
+	fig3.prisma2(text7.GLindex, text7.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0.635, 1.80, 0.0);
+	glRotatef(45, 0, 0, 1);
+	glScalef(0.25, 1.45, .25);
+	glDisable(GL_LIGHTING);
+	fig3.prisma2(text7.GLindex, text7.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPopMatrix();
+
+}
+void torreblanca(void) {
+
+	glPushMatrix();
+	glPushMatrix();
+	glTranslatef(0.0, 1.85, 0.0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig8.prisma2(text8.GLindex, text8.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0.0, 1.25, 0.38);
+	glRotatef(180, 0.0, 1.0, 1.0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig8.prisma2(text8.GLindex, text8.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0.0, 1.85, 0.75);
+	glRotatef(0, 0.0, 1.0, 1.0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig8.prisma2(text8.GLindex, text8.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0.0, 2.475, 0.38);
+	glRotatef(180, 0.0, 1.0, 1.0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig8.prisma2(text8.GLindex, text8.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0.635, 1.25, 0.75);
+	glRotatef(180, 1, 1, 0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig8.prisma2(text8.GLindex, text8.GLindex);;
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0.635, 1.25, 0.0);
+	glRotatef(180, 1, 1, 0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig8.prisma2(text8.GLindex, text8.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(1.25, 1.25, 0.38);
+	glRotatef(180, 0.0, 1.0, 1.0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig8.prisma2(text8.GLindex, text8.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(1.25, 1.85, 0.0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig8.prisma2(text8.GLindex, text8.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(1.25, 1.85, 0.75);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig8.prisma2(text8.GLindex, text8.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(1.25, 2.475, 0.38);
+	glRotatef(180, 0.0, 1.0, 1.0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig8.prisma2(text8.GLindex, text8.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0.635, 2.475, 0.0);
+	glRotatef(180, 1, 1, 0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig8.prisma2(text8.GLindex, text8.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0.635, 2.475, 0.75);
+	glRotatef(180, 1, 1, 0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig8.prisma2(text8.GLindex, text8.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(0.635, 1.80, 0.75);
+	glRotatef(45, 0, 0, 1);
+	glScalef(0.25, 1.45, .25);
+	glDisable(GL_LIGHTING);
+	fig8.prisma2(text8.GLindex, text8.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0.635, 1.80, 0.0);
+	glRotatef(45, 0, 0, 1);
+	glScalef(0.25, 1.45, .25);
+	glDisable(GL_LIGHTING);
+	fig8.prisma2(text8.GLindex, text8.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPopMatrix();
+
+}
+
+void silla1(void) {
+
+	glPushMatrix();
+	glTranslatef(0, .015, 0);
+	glScalef(1, .01, 1);
+	fig13.prisma2(text13.GLindex, text13.GLindex);
+
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0, 0, -.4);
+	glRotatef(90, 1, 0, 0);
+	glScalef(1, .01, .07);
+	fig13.prisma2(text13.GLindex, text13.GLindex);
+	glPopMatrix();
+
+
+
+}
+void torreazul(void) {
+
+	glPushMatrix();
+	glPushMatrix();
+	glTranslatef(0.0, 1.85, 0.0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig10.prisma2(text9.GLindex, text9.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0.0, 1.25, 0.38);
+	glRotatef(180, 0.0, 1.0, 1.0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig10.prisma2(text9.GLindex, text9.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0.0, 1.85, 0.75);
+	glRotatef(0, 0.0, 1.0, 1.0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig10.prisma2(text9.GLindex, text9.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0.0, 2.475, 0.38);
+	glRotatef(180, 0.0, 1.0, 1.0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig10.prisma2(text9.GLindex, text9.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0.635, 1.25, 0.75);
+	glRotatef(180, 1, 1, 0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig10.prisma2(text9.GLindex, text9.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0.635, 1.25, 0.0);
+	glRotatef(180, 1, 1, 0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig10.prisma2(text9.GLindex, text9.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(1.25, 1.25, 0.38);
+	glRotatef(180, 0.0, 1.0, 1.0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig10.prisma2(text9.GLindex, text9.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(1.25, 1.85, 0.0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig10.prisma2(text9.GLindex, text9.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(1.25, 1.85, 0.75);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig10.prisma2(text9.GLindex, text9.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(1.25, 2.475, 0.38);
+	glRotatef(180, 0.0, 1.0, 1.0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig10.prisma2(text9.GLindex, text9.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0.635, 2.475, 0.0);
+	glRotatef(180, 1, 1, 0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig10.prisma2(text9.GLindex, text9.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0.635, 2.475, 0.75);
+	glRotatef(180, 1, 1, 0);
+	glScalef(0.25, 1, .25);
+	glDisable(GL_LIGHTING);
+	fig10.prisma2(text9.GLindex, text9.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslatef(0.635, 1.80, 0.75);
+	glRotatef(45, 0, 0, 1);
+	glScalef(0.25, 1.45, .25);
+	glDisable(GL_LIGHTING);
+	fig10.prisma2(text9.GLindex, text9.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPushMatrix();
+	glTranslatef(0.635, 1.80, 0.0);
+	glRotatef(45, 0, 0, 1);
+	glScalef(0.25, 1.45, .25);
+	glDisable(GL_LIGHTING);
+	fig10.prisma2(text9.GLindex, text9.GLindex);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+	glPopMatrix();
+
+}
+
+void avionv(void) {
+	glPushMatrix();//avion
+	glRotatef(90, 0, 1, 0);
+	glScalef(0.3, 0.3, 0.3);
+
+
+
+	glTranslatef(movKitX, 4 + movKitY, movKitZ);
+	glRotatef(rotKit, 0, 1, 0);
+	glRotatef(rotKitv, 1, 0, 0);
+	glRotatef(pirueta,0,0,1);
+
+
+	avion.GLrender(NULL, _SHADED, 1.0);
+
+	glPopMatrix();
+
 }
 void mesa(void) {
 	glPushMatrix();
@@ -386,6 +925,11 @@ void barracocina(void) {
 	glPopMatrix();
 }
 void sonidotomaseltren() {
+
+	PlaySound(TEXT("tomas.wav"), NULL, SND_ASYNC);
+}
+
+void sonidotomaseltren1() {
 
 	PlaySound(TEXT("tomas.wav"), NULL, SND_ASYNC);
 }
@@ -1520,8 +2064,318 @@ void display(void)   // Creamos la funcion donde se dibuja
 
 	///////////
 			glPopMatrix();//Pop para todo el escenario
-		glPopMatrix();
 
+			glPushMatrix();//avion
+			glTranslatef(0, 120+movY, 0);
+			avionv();
+			
+			glPopMatrix();
+
+
+
+			//aqui empieza torre
+			glPushMatrix();
+			glTranslatef(0,-30, 120);
+			glPushMatrix();
+			torreroja();
+			glPopMatrix();
+			glPushMatrix();
+			glTranslatef(0.0, 1.2, 0.0);
+			torreroja();
+			glPopMatrix();
+			glPushMatrix();
+			glTranslatef(0.0, 2.4, 0.0);
+			torreroja();
+			glPopMatrix();
+
+			glPushMatrix();
+			glTranslatef(0.0, 3.6, 0.0);
+			torreroja();
+			glPopMatrix();
+
+			glPushMatrix();
+			glTranslatef(0.0, 4.8, 0.0);
+			torreroja();
+			glPopMatrix();
+			glPushMatrix();
+			glTranslatef(0.0, 6, 0.0);
+			torreroja();
+			glPopMatrix();
+			//torre blanca
+			glPushMatrix();
+			glTranslatef(0.0, 7.5, 0.0);
+			torreblanca();
+			glPopMatrix();
+
+			glPushMatrix();
+			glTranslatef(0.0, 8.7, 0.0);
+			torreblanca();
+			glPopMatrix();
+
+			glPushMatrix();
+			glTranslatef(0.0, 9.9, 0.0);
+			torreblanca();
+			glPopMatrix();
+
+			glPushMatrix();
+			glTranslatef(0.0, 11.1, 0.0);
+			torreblanca();
+			glPopMatrix();
+
+			glPushMatrix();
+			glTranslatef(0.0, 12.3, 0.0);
+			torreblanca();
+			glPopMatrix();
+
+			glPushMatrix();
+			glTranslatef(0.0, 13.5, 0.0);
+			torreblanca();
+			glPopMatrix();
+
+			glPushMatrix();
+			glTranslatef(0.0, 14.7, 0.0);
+			torreblanca();
+			glPopMatrix();
+			//torre azul
+
+			glPushMatrix();
+			glTranslatef(0.0, 16.2, 0.0);
+			torreazul();
+			glPopMatrix();
+
+			glPushMatrix();
+			glTranslatef(0.0, 17.7, 0.0);
+			torreazul();
+			glPopMatrix();
+
+			glPushMatrix();
+			glTranslatef(0.0, 19.2, 0.0);
+			torreazul();
+			glPopMatrix();
+
+			glPushMatrix();
+			glTranslatef(0.0, 20.7, 0.0);
+			torreazul();
+			glPopMatrix();
+
+			glPushMatrix();
+			glTranslatef(0.0, 22.2, 0.0);
+			torreazul();
+			glPopMatrix();
+
+			glPushMatrix();
+			glTranslatef(0.0, 23.7, 0.0);
+			torreazul();
+			glPopMatrix();
+
+			glPushMatrix();
+			glTranslatef(0.0, 25.2, 0.0);
+			torreazul();
+			glPopMatrix();
+
+			glPushMatrix();
+			glTranslatef(0.0, 23.7, 0.0);
+			torreazul();
+			glPopMatrix();
+
+			glPushMatrix();
+			glTranslatef(0.0, 25.2, 0.0);
+			torreazul();
+			glPopMatrix();
+
+			// mundo
+			glPushMatrix();
+			
+			glTranslatef(0.5, 29, .5);
+			glRotatef(360, 0, 1, 0);
+			glRotatef(mundo, 0.0, 1.0, 0.0);
+			fig8.esfera(1.5, 100, 100, text13.GLindex);
+			glPopMatrix();
+
+
+			//conos con estrellas 
+			glPushMatrix();
+			glDisable(GL_LIGHTING);
+			glTranslatef(.5, arriba, .4);
+			glScalef(2, 1, 2);
+			glRotatef(-juego, 0, 1, 0);
+
+			glPushMatrix();
+			glTranslatef(-0, 24, 0);
+			glRotatef(90, 0, 0, 1);
+			glRotatef(50, 1, 0, 0);
+			fig11.cono(2, .5, 100, text11.GLindex);
+			//cadena
+			glPushMatrix();
+			glEnable(GL_ALPHA_TEST);
+			glAlphaFunc(GL_GREATER, 0.1);
+			glTranslatef(0, 2, 0);
+			glRotatef(65, 0, 0, 1);
+			glScalef(.04, 1, .04);
+			fig12.cilindro(1, 6, 100, text12.GLindex);
+			glDisable(GL_ALPHA_TEST);
+			//silla
+			glPushMatrix();
+			glScalef(6, 6, 6);
+			glTranslatef(0, 1, .5);
+			silla1();
+			glPopMatrix();
+
+			glPopMatrix();
+			glPopMatrix();
+
+			glPushMatrix();
+			glTranslatef(0, 24, 0);
+			glRotatef(90, 0, 0, 1);
+			glRotatef(100, 1, 0, 0);
+			fig11.cono(2, .5, 100, text11.GLindex);
+			//cadena
+			glPushMatrix();
+			glEnable(GL_ALPHA_TEST);
+			glAlphaFunc(GL_GREATER, 0.1);
+			glTranslatef(0, 2, 0);
+			glRotatef(65, 0, 0, 1);
+			glScalef(.04, 1, .04);
+			fig12.cilindro(1, 6, 100, text12.GLindex);
+			glDisable(GL_ALPHA_TEST);
+			//silla
+			glPushMatrix();
+			glScalef(6, 6, 6);
+			glTranslatef(0, 1, .5);
+			silla1();
+			glPopMatrix();
+			glPopMatrix();
+			glPopMatrix();
+
+
+
+			glPushMatrix();
+			glTranslatef(0, 24, 0);
+			glRotatef(90, 0, 0, 1);
+			glRotatef(150, 1, 0, 0);
+			fig11.cono(2, .5, 100, text11.GLindex);
+			//cadena
+			glPushMatrix();
+			glEnable(GL_ALPHA_TEST);
+			glAlphaFunc(GL_GREATER, 0.1);
+			glTranslatef(0, 2, 0);
+			glRotatef(65, 0, 0, 1);
+			glScalef(.04, 1, .04);
+			fig12.cilindro(1, 6, 100, text12.GLindex);
+			glDisable(GL_ALPHA_TEST);
+			//silla
+			glPushMatrix();
+			glScalef(6, 6, 6);
+			glTranslatef(0, 1, .5);
+			silla1();
+			glPopMatrix();
+			glPopMatrix();
+
+			glPopMatrix();
+
+			glPushMatrix();
+			glTranslatef(0, 24, 0);
+			glRotatef(90, 0, 0, 1);
+			glRotatef(200, 1, 0, 0);
+			fig11.cono(2, .5, 100, text11.GLindex);
+			//cadena
+			glPushMatrix();
+			glEnable(GL_ALPHA_TEST);
+			glAlphaFunc(GL_GREATER, 0.1);
+			glTranslatef(0, 2, 0);
+			glRotatef(65, 0, 0, 1);
+			glScalef(.04, 1, .04);
+			fig12.cilindro(1, 6, 100, text12.GLindex);
+			glDisable(GL_ALPHA_TEST);
+			//silla
+			glPushMatrix();
+			glScalef(6, 6, 6);
+			glTranslatef(0, 1, .5);
+			silla1();
+			glPopMatrix();
+			glPopMatrix();
+			glPopMatrix();
+
+			glPushMatrix();
+			glTranslatef(0, 24, 0);
+			glRotatef(90, 0, 0, 1);
+			glRotatef(250, 1, 0, 0);
+			fig11.cono(2, .5, 100, text11.GLindex);
+			//cadena
+			glPushMatrix();
+			glEnable(GL_ALPHA_TEST);
+			glAlphaFunc(GL_GREATER, 0.1);
+			glTranslatef(0, 2, 0);
+			glRotatef(65, 0, 0, 1);
+			glScalef(.04, 1, .04);
+			fig12.cilindro(1, 6, 100, text12.GLindex);
+			glDisable(GL_ALPHA_TEST);
+			//silla
+			glPushMatrix();
+			glScalef(6, 6, 6);
+			glTranslatef(0, 1, .5);
+			silla1();
+			glPopMatrix();
+			glPopMatrix();
+			glPopMatrix();
+
+			glPushMatrix();
+			glTranslatef(0, 24, 0);
+			glRotatef(90, 0, 0, 1);
+			glRotatef(300, 1, 0, 0);
+			fig11.cono(2, .5, 100, text11.GLindex);
+			//cadena
+			glPushMatrix();
+			glEnable(GL_ALPHA_TEST);
+			glAlphaFunc(GL_GREATER, 0.1);
+			glTranslatef(0, 2, 0);
+			glRotatef(65, 0, 0, 1);
+			glScalef(.04, 1, .04);
+			fig12.cilindro(1, 6, 100, text12.GLindex);
+			glDisable(GL_ALPHA_TEST);
+			//silla
+			glPushMatrix();
+			glScalef(6, 6, 6);
+			glTranslatef(0, 1, .5);
+			silla1();
+			glPopMatrix();
+			glPopMatrix();
+
+			glPopMatrix();
+
+			glPushMatrix();
+			glTranslatef(0, 24, 0);
+			glRotatef(90, 0, 0, 1);
+			glRotatef(350, 1, 0, 0);
+			fig11.cono(2, .5, 100, text11.GLindex);
+			//cadena
+			glPushMatrix();
+			glEnable(GL_ALPHA_TEST);
+			glAlphaFunc(GL_GREATER, 0.1);
+			glTranslatef(0, 2, 0);
+			glRotatef(65, 0, 0, 1);
+			glScalef(.04, 1, .04);
+			fig12.cilindro(1, 6, 100, text12.GLindex);
+			glDisable(GL_ALPHA_TEST);
+			//silla
+			glPushMatrix();
+			glScalef(6, 6, 6);
+			glTranslatef(0, 1, .5);
+			silla1();
+			glPopMatrix();
+			glPopMatrix();
+			glPopMatrix();
+
+
+			glPopMatrix();
+
+			glPopMatrix();//acaba skyscreamer
+
+
+
+
+
+		glPopMatrix();
 		glPopMatrix();//fin
 		
 	glutSwapBuffers ( );
@@ -1532,25 +2386,142 @@ void display(void)   // Creamos la funcion donde se dibuja
 
 void animacion()
 {
-	if(giro_ventilador){
+	if (giro_ventilador) {
 		rotVentilador += 1.0;
 	}
-//
-//
-//	if(g_fanimacion)
-//	{
-//		movKit +=1.0;
-//		rot += 1.0;
-//	}
-//
-//	if (g_fanimacion2)
-//	{
-//		movKit -= 1.0;
-//		rot  -= 1.0;
-//	}
-//	
-//
-//
+
+	// Calculate the number of frames per one second:
+	//dwFrames++;
+	dwCurrentTime = GetTickCount(); // Even better to use timeGetTime()
+	dwElapsedTime = dwCurrentTime - dwLastUpdateTime;
+
+	if (dwElapsedTime >= 30)
+	{
+		juego = (juego - 11) % 360;
+
+
+
+
+		dwLastUpdateTime = dwCurrentTime;
+	}
+
+	if (play)
+	{
+
+		if (i_curr_steps >= i_max_steps) //end of animation between frames?
+		{
+			playIndex++;
+			if (playIndex>FrameIndex - 2)	//end of total animation?
+			{
+				printf("termina anim\n");
+				playIndex = 0;
+				play = false;
+			}
+			else //Next frame interpolations
+			{
+				i_curr_steps = 0; //Reset counter
+								  //Interpolation
+
+								  //Interpolaciones incremento.
+								  //el incremento es la distancia entre dos cuadros, el 2 - 1 y se divide entre el 90(i_max_steps)   Se hace la interpolacion
+
+
+				KeyFrame[playIndex].arribaInc = (KeyFrame[playIndex + 1].arriba - KeyFrame[playIndex].arriba) / i_max_steps;
+			
+
+			}
+		}
+		else
+		{	//Draw information
+
+
+			arriba += KeyFrame[playIndex].arribaInc;
+		
+
+
+
+			i_curr_steps++;
+		}
+
+	}
+
+	frame++;
+	time = glutGet(GLUT_ELAPSED_TIME);
+	if (time - timebase > 1000) {
+		sprintf(s, "FPS:%4.2f", frame*1000.0 / (time - timebase));
+		timebase = time;
+		frame = 0;
+	}
+
+
+
+
+	if (circuito)
+	{
+		if (recorrido1)
+		{
+			movKitZ++;
+			if (movKitZ>550)
+			{
+				recorrido1 = false;
+				recorrido2 = true;
+			}
+		}
+		if (recorrido2)
+		{	
+			
+			rotKit = 90;
+			movKitX++;
+			if (movKitX > 305)
+			{
+				recorrido2 = false;
+				recorrido3 = true;
+
+			}
+		}
+		if (recorrido3)
+		{
+			rotKit = 180;
+			pirueta += 5.0;
+			movY--;
+			movKitZ--;
+			printf("%f", movY);
+			if (movY < -60) {
+
+				movY ++;
+				printf("%f", movY);
+
+				if (movKitZ < -305)
+				{
+					recorrido3 = false;
+					recorrido4 = true;
+				}
+			}
+		}
+		if (recorrido4)
+		{
+			rotKit = 270;
+			movKitX--;
+			if (movKitX<0)
+			{
+				recorrido4 = false;
+				recorrido5 = true;
+			}
+		}
+		if (recorrido5)
+		{
+			rotKit = 0;
+			movKitZ++;
+			if (movKitZ>0)
+			{
+				recorrido5 = false;
+				recorrido1 = true;
+			}
+		}
+	}
+
+
+
 	glutPostRedisplay();
 }
 
@@ -1574,42 +2545,78 @@ void reshape ( int width , int height )   // Creamos funcion Reshape
 	glLoadIdentity();
 }
 
-void keyboard ( unsigned char key, int x, int y )  // Create Keyboard Function
+void keyboard(unsigned char key, int x, int y)  // Create Keyboard Function
 {
-	switch ( key ) {
-		case 'w':   //Movimientos de camara
-		case 'W':
-			objCamera.Move_Camera( CAMERASPEED+0.4 );
-			
-			break;
+	switch (key) {
+	case 'w':   //Movimientos de camara
+	case 'W':
+		objCamera.Move_Camera(CAMERASPEED + 0.4);
 
-		case 's':
-		case 'S':
-			objCamera.Move_Camera(-(CAMERASPEED+0.4));
-			
-			break;
+		break;
 
-		case 'a':
-		case 'A':
-			objCamera.Strafe_Camera(-(CAMERASPEED+0.4));
+	case 's':
+	case 'S':
+		objCamera.Move_Camera(-(CAMERASPEED + 0.4));
+
+		break;
+
+	case 'a':
+	case 'A':
+		objCamera.Strafe_Camera(-(CAMERASPEED + 0.4));
+
+		break;
+
+	case 'd':
+	case 'D':
+		objCamera.Strafe_Camera(CAMERASPEED + 0.4);
+
+		break;
+
+	case 'v':
+	case 'V':
+		giro_ventilador ^= true;
+		break;
+	case 'u':
+	case 'U':
+		sonidotomaseltren();
+		giro_ventilador ^= true;
+		break;
+
+	case't':
+	case'T':
+		circuito ^= true; //Activamos/desactivamos la animacíon
+		g_fanimacion = false;
+		break;
+	case'l':
+	case'L':
+		if (play == false && (FrameIndex > 1))
+		{
+
+			arriba = KeyFrame[0].arriba;
 		
-			break;
 
-		case 'd':
-		case 'D':
-			objCamera.Strafe_Camera( CAMERASPEED+0.4 );
+			//First Interpolation
+
+
+			KeyFrame[playIndex].arribaInc = (KeyFrame[playIndex + 1].arriba - KeyFrame[playIndex].arriba) / i_max_steps;
 			
-			break;
 
-		case 'v':
-		case 'V':
-			giro_ventilador ^= true;
-			break;
-		case 'u':
-		case 'U':
-			sonidotomaseltren();
-			giro_ventilador ^= true;
-			break;
+			
+			//KeyFrame[playIndex].tije2Inc = (KeyFrame[playIndex + 1].tije2 - KeyFrame[playIndex].tije2) / i_max_steps;
+
+			play = true;
+			playIndex = 0;
+			i_curr_steps = 0;
+		}
+		else
+		{
+			play = false;
+		}
+
+		break;
+
+
+	
 		//case ' ':		//Poner algo en movimiento
 		//	g_fanimacion = true; //Activamos/desactivamos la animacíon
 		//	break;
