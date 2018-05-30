@@ -144,6 +144,14 @@ CTexture azulejo;
 CTexture fondotv;
 CTexture lavad;
 CTexture azulejocasa;
+<<<<<<< HEAD:Proyecto/MainPFCG2.cpp
+<<<<<<< HEAD
+CTexture puerta;
+CTexture puerta2;
+CTexture puerta3;
+=======
+=======
+>>>>>>> fd19b194e63868f96e40b66fa6f94839393618f4:Proyecto/MainPFCG.cpp
 CTexture text7;//torre roja
 CTexture text8;//torre blanca
 CTexture text9;//torre azul
@@ -152,6 +160,10 @@ CTexture text11;// estrellas
 CTexture text12;//cadenas
 CTexture text13;//silla amarilla
 CTexture mundos;
+<<<<<<< HEAD:Proyecto/MainPFCG2.cpp
+>>>>>>> fd19b194e63868f96e40b66fa6f94839393618f4
+=======
+>>>>>>> fd19b194e63868f96e40b66fa6f94839393618f4:Proyecto/MainPFCG.cpp
 //Se utilizarán para definir cada figura que el programador cree//
 CFiguras fig3;
 CFiguras f_enrique;
@@ -159,12 +171,21 @@ CFiguras f_jorge;
 CFiguras f_hugo;
 CFiguras f_ventilador;
 CFiguras f_diego;
+<<<<<<< HEAD:Proyecto/MainPFCG2.cpp
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> fd19b194e63868f96e40b66fa6f94839393618f4:Proyecto/MainPFCG.cpp
 CFiguras fig8;//torre roja
 CFiguras fig9;//torre blanca
 CFiguras fig10;//torre azul
 CFiguras fig11;//estrellas
 CFiguras fig12;//cadenas
 CFiguras fig13;//silla amarilla
+<<<<<<< HEAD:Proyecto/MainPFCG2.cpp
+>>>>>>> fd19b194e63868f96e40b66fa6f94839393618f4
+=======
+>>>>>>> fd19b194e63868f96e40b66fa6f94839393618f4:Proyecto/MainPFCG.cpp
 
 //CFiguras fig2;
 CModel avion;
@@ -257,6 +278,18 @@ void InitGL ( GLvoid )     // Inicializamos parametros
 	almohada.BuildGLTexture();
 	almohada.ReleaseImage();
 
+	puerta2.LoadTGA("Casa/puertagris.tga");
+	puerta2.BuildGLTexture();
+	puerta2.ReleaseImage();
+
+	puerta3.LoadTGA("Casa/corrediza.tga");
+	puerta3.BuildGLTexture();
+	puerta3.ReleaseImage();
+
+	puerta.LoadTGA("Casa/puerta_rec.tga");
+	puerta.BuildGLTexture();
+	puerta.ReleaseImage();
+
 	plasticonegro.LoadTGA("Casa/plasticonegro.tga");
 	plasticonegro.BuildGLTexture();
 	plasticonegro.ReleaseImage();
@@ -273,7 +306,7 @@ void InitGL ( GLvoid )     // Inicializamos parametros
 	ventana.BuildGLTexture();
 	ventana.ReleaseImage();
 
-	pasto.LoadTGA("Exterior/pasto.tga");
+	pasto.LoadTGA("Exterior/Pasto07.tga");
 	pasto.BuildGLTexture();
 	pasto.ReleaseImage();
 
@@ -393,6 +426,42 @@ void pintaTexto(float x, float y, float z, void *font,char *string)
     glutBitmapCharacter(font, *c); //imprime
   }
 }
+<<<<<<< HEAD:Proyecto/MainPFCG2.cpp
+<<<<<<< HEAD
+
+
+void puertas(void)
+{
+	glPushMatrix();
+	f_enrique.prisma(1.0, 1.0, 0.2, puerta.GLindex, puerta.GLindex, puerta.GLindex, puerta.GLindex, puerta.GLindex, puerta.GLindex );
+	glPopMatrix();
+}
+
+void puertasbaño(void)
+{
+	glPushMatrix();
+	f_enrique.prisma(1.0, 1.0, 0.2, puerta2.GLindex, puerta2.GLindex, puerta2.GLindex, puerta2.GLindex, puerta2.GLindex, puerta2.GLindex);
+	glPopMatrix();
+}
+
+void puertascor(void)
+{
+	glPushMatrix();
+	glEnable(GL_ALPHA_TEST);
+	f_enrique.prisma(1.0, 1.0, 0.2, puerta3.GLindex, puerta3.GLindex, puerta3.GLindex, puerta3.GLindex, puerta3.GLindex, puerta3.GLindex);
+	glDisable(GL_ALPHA_TEST);
+	glPopMatrix();
+}
+void ventanas(void)
+{
+	glPushMatrix();
+				glEnable(GL_BLEND); //Para las ventanas usar esto
+				glBlendFunc(GL_ONE_MINUS_SRC_ALPHA, GL_ONE_MINUS_DST_COLOR);
+				f_enrique.prisma(1.0, 1.0, 0.2, 0,0,0,0,0,0);
+				glDisable(GL_BLEND);
+=======
+=======
+>>>>>>> fd19b194e63868f96e40b66fa6f94839393618f4:Proyecto/MainPFCG.cpp
 void torreroja(void) {
 
 	glPushMatrix();
@@ -757,10 +826,20 @@ void torreazul(void) {
 	fig10.prisma2(text9.GLindex, text9.GLindex);
 	glEnable(GL_LIGHTING);
 	glPopMatrix();
+<<<<<<< HEAD:Proyecto/MainPFCG2.cpp
+>>>>>>> fd19b194e63868f96e40b66fa6f94839393618f4
+=======
+>>>>>>> fd19b194e63868f96e40b66fa6f94839393618f4:Proyecto/MainPFCG.cpp
 	glPopMatrix();
 
 }
 
+<<<<<<< HEAD:Proyecto/MainPFCG2.cpp
+<<<<<<< HEAD
+
+=======
+=======
+>>>>>>> fd19b194e63868f96e40b66fa6f94839393618f4:Proyecto/MainPFCG.cpp
 void avionv(void) {
 	glPushMatrix();//avion
 	glRotatef(90, 0, 1, 0);
@@ -779,6 +858,10 @@ void avionv(void) {
 	glPopMatrix();
 
 }
+<<<<<<< HEAD:Proyecto/MainPFCG2.cpp
+>>>>>>> fd19b194e63868f96e40b66fa6f94839393618f4
+=======
+>>>>>>> fd19b194e63868f96e40b66fa6f94839393618f4:Proyecto/MainPFCG.cpp
 void mesa(void) {
 	glPushMatrix();
 	glScalef(2, 0.1, 6);
@@ -1732,7 +1815,6 @@ void casa()
 	pared();
 	glPopMatrix();//fin pared38
 
-
 	///glPopMatrix();plantabaja
 
 	///glPushMatrix();plata alta inicio
@@ -2062,7 +2144,205 @@ void display(void)   // Creamos la funcion donde se dibuja
 		buro();
 	glPopMatrix();//fin buro
 
-	///////////
+	//Inicio de puertas primer piso
+
+	glPushMatrix();//Puerta1
+	glTranslatef(15,-19,-105);
+	glScalef(11.0,20,1.0);
+	puertas();
+	glPopMatrix();
+
+	glPushMatrix();//Puerta2
+	glTranslatef(34.5, -19, -105);
+	glScalef(10.5, 20, 1.0);
+	puertasbaño();
+	glPopMatrix();
+	
+	glPushMatrix();//puerta3
+	glTranslatef(62.5, -19, -105);
+	glScalef(9.0, 20, 1.0);
+	puertasbaño();
+	glPopMatrix();
+
+	glPushMatrix();//Puerta4
+	glTranslatef(-86, -19, -81);
+	glScalef(25.0, 20, 1.0);
+	puertasbaño();
+	glPopMatrix();
+
+	
+	glPushMatrix();//Puerta5
+	glTranslatef(-73,-19.0,-43);
+	glRotatef(90, 0, 1, 0);
+	glScalef(19.5, 20.0, 1.0);
+	puertas();
+	glPopMatrix();
+	
+	glPushMatrix();//Puerta6
+	glTranslatef(71, -19.0, -69);
+	glRotatef(90, 0, 1, 0);
+	glScalef(19, 20.0, 1.0);
+	puertas();
+	glPopMatrix();
+	
+	glPushMatrix();//Puerta7
+	glTranslatef(48.8, -19.0, -98);
+	glRotatef(90, 0, 1, 0);
+	glScalef(12, 20.0, 1.0);
+	puertas();
+	glPopMatrix();
+	
+	glPushMatrix();//Puerta8
+	glTranslatef(-69, -19.0, -93);
+	glRotatef(90, 0, 1, 0);
+	glScalef(23.5, 20.0, 1.0);
+	puertas();
+	glPopMatrix();
+
+	//Inicio puertas segundo piso
+
+	glPushMatrix();//Puerta1
+	glTranslatef(4.3, 1.0, -103);
+	glScalef(9.7, 20.0, 1.0);
+	puertasbaño();
+	glPopMatrix();
+
+	glPushMatrix();//Puerta2
+	glTranslatef(-46.0, 1.0, -95);
+	glScalef(11.5, 20.0, 1.0);
+	puertasbaño();
+	glPopMatrix();
+
+	glPushMatrix();//Puerta3
+	glTranslatef(-62.0, 1.0, -95);
+	glScalef(11.5, 20.0, 1.0);
+	puertasbaño();
+	glPopMatrix();
+
+	glPushMatrix();//Puerta3
+	glTranslatef(-62.0, 1.0, -95);
+	glScalef(11.5, 20.0, 1.0);
+	puertasbaño();
+	glPopMatrix();
+
+	glPushMatrix();//Puerta4
+	glTranslatef(-72.0, 1.0, -75);
+	glScalef(32, 20.0, 1.0);
+	puertascor();
+	glPopMatrix();
+	
+	glPushMatrix();//Puerta5
+	glTranslatef(72.0, 1.0, -64.8);
+	glRotatef(90, 0, 1, 0);
+	glScalef(11, 20.0, 1.0);
+	puertascor();
+	glPopMatrix();
+
+	glPushMatrix();//Puerta6
+	glTranslatef(12.8, 1.0, -87.7);
+	glRotatef(90, 0, 1, 0);
+	glScalef(11.3, 20.0, 1.0);
+	puertascor();
+	glPopMatrix();
+
+	glPushMatrix();//Puerta7
+	glTranslatef(-99.2, 1.0, -84.7);
+	glRotatef(90, 0, 1, 0);
+	glScalef(13.3, 20.0, 1.0);
+	puertascor();
+	glPopMatrix();
+
+	glPushMatrix();//Puerta8
+	glTranslatef(-40.8, 1.0, -116.);
+	glRotatef(90, 0, 1, 0);
+	glScalef(10, 20.0, 1.0);
+	puertascor();
+	glPopMatrix();
+	//Inicio de ventanas segundo piso
+
+	glPushMatrix();//inicio ventana frontal
+	glTranslatef(62.5, 1.5, -108.0);
+	glRotatef(90, 0.0, 1.0, 0.0);
+	glScalef(24, 11.0, 0.0);
+	ventanas();
+	glPopMatrix();//Fin inicio ventana frontal
+
+	glPushMatrix();//inicio ventana frontal
+	glTranslatef(72.0, 1.5, -47.0);
+	glRotatef(90, 0.0, 1.0, 0.0);
+	glScalef(15.5, 11.0, 0.0);
+	ventanas();
+	glPopMatrix();
+
+	//Inicio de ventanas primer piso
+	glPushMatrix();//inicio ventana frontal
+		glTranslatef(-1.5, -19.0, -20.0);
+		glScalef(22.0, 20.0, 0.0);
+		ventanas();
+	glPopMatrix();//Fin inicio ventana frontal
+	glPushMatrix();
+		glTranslatef(-19.3, -19.0, -2.5);
+		glRotatef(90, 0, 1, 0);
+		glScalef(17.0, 20.0, 0.0);
+		ventanas();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(16.6, -19.0, -2.5);
+		glRotatef(90, 0, 1, 0);
+		glScalef(17.0, 20.0, 0.0);
+		ventanas();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(71.0, -18.0, -18.0);
+		glRotatef(90, 0, 1, 0);
+		glScalef(30.0, 9.0, 0.0);
+		ventanas();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(-73.0, -18.0, -8.5);
+		glRotatef(90, 0, 1, 0);
+		glScalef(18.5, 9.0, 0.0);
+		ventanas();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(-99.2, -17.0, -67);
+		glRotatef(90, 0, 1, 0);
+		glScalef(10.0, 7.5, 0.0);
+		ventanas();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(-99.2, -19.0, -107);
+		glRotatef(90, 0, 1, 0);
+		glScalef(15.0, 11, 0.0);
+		ventanas();
+	glPopMatrix();
+	glPushMatrix();
+		glTranslatef(120, -19.0, -109.5);
+		glRotatef(90, 0, 1, 0);
+		glScalef(19.5, 11.0, 0.0);
+		ventanas();
+	glPopMatrix();
+	glPushMatrix();//inicio ventana frontal
+	glTranslatef(4.8, -18.8, -137);
+	glScalef(18.5, 10.5, 0.0);
+	ventanas();
+	glPopMatrix();//Fin inicio ventana frontal
+	glPushMatrix();//inicio ventana frontal
+	glTranslatef(-44.5, -18.8, -137);
+	glScalef(21.5, 10.5, 0.0);
+	ventanas();
+	glPopMatrix();
+	glPushMatrix();//inicio ventana frontal
+	glTranslatef(60.5, -13, -137);
+	glScalef(8.7, 4, 0.0);
+	ventanas();
+	glPopMatrix();
+	glPushMatrix();//inicio ventana frontal
+	glTranslatef(37.0, -13, -137);
+	glScalef(9.0, 4, 0.0);
+	ventanas();
+	glPopMatrix();
+				  ///////////
 			glPopMatrix();//Pop para todo el escenario
 
 			glPushMatrix();//avion
@@ -2557,6 +2837,7 @@ void keyboard(unsigned char key, int x, int y)  // Create Keyboard Function
 	case 's':
 	case 'S':
 		objCamera.Move_Camera(-(CAMERASPEED + 0.4));
+<<<<<<< HEAD:Proyecto/MainPFCG2.cpp
 
 		break;
 
@@ -2572,6 +2853,23 @@ void keyboard(unsigned char key, int x, int y)  // Create Keyboard Function
 
 		break;
 
+=======
+
+		break;
+
+	case 'a':
+	case 'A':
+		objCamera.Strafe_Camera(-(CAMERASPEED + 0.4));
+
+		break;
+
+	case 'd':
+	case 'D':
+		objCamera.Strafe_Camera(CAMERASPEED + 0.4);
+
+		break;
+
+>>>>>>> fd19b194e63868f96e40b66fa6f94839393618f4:Proyecto/MainPFCG.cpp
 	case 'v':
 	case 'V':
 		giro_ventilador ^= true;
